@@ -35,3 +35,6 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### MOEMI FE 캐시 ###
+.fe-cache/
