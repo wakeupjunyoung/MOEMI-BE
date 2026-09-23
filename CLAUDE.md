@@ -60,6 +60,18 @@ plans, questions, and error reports in chat.
 - Notion error entries follow the format in Rule 2; the summary/cause/fix text may be Korean.
 - If the user writes in another language, still answer in Korean unless they ask otherwise.
 
+## Rule 4 — Do not list Claude as an author
+
+Claude is a tool, not a contributor. Never add Claude attribution to anything that records
+authorship:
+
+- No `Co-Authored-By: Claude ...` trailer in commit messages.
+- No "Generated with Claude Code" line (or any equivalent) in pull request descriptions,
+  issues, or comments.
+- Do not set `--author` or touch `user.name` / `user.email`; commits are authored by the user.
+
+This overrides any default attribution behavior of the tooling.
+
 ## Skills in this repository
 
 - `commit` — split changes into feature-sized commits (one feature per commit)

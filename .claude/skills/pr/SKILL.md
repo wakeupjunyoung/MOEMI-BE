@@ -58,11 +58,10 @@ gh pr create --base main --head "$(git branch --show-current)" \
 
 ## 확인 필요
 - 비밀번호 정책을 프론트 검증과 맞출지
-
-🤖 Generated with [Claude Code](https://claude.com/claude-code)
 BODY
 ```
 
+- PR 본문에 Claude 생성 표기("Generated with Claude Code" 등)를 넣지 않는다 (CLAUDE.md Rule 4).
 - 제목은 대표 커밋 메시지와 같은 형식(`<type>: <한국어 요약>`)을 쓴다.
 - 커밋이 여러 개면 제목은 PR 전체를 아우르는 한 줄로 쓰고, 세부는 `## 변경사항`에 나열한다.
 - 초안으로 올릴 때는 `--draft` 를 붙인다.

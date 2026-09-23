@@ -44,8 +44,6 @@ feat: 회원가입 API 구현
 
 - Member 엔티티와 JPA Repository 추가
 - 이메일 중복 검사 후 BCrypt로 비밀번호 저장
-
-Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>
 MSG
 ```
 
@@ -59,9 +57,9 @@ MSG
 <type>: <한 줄 요약 — 한국어, 50자 내외, 명사형 종결>
 
 - 무엇을 왜 바꿨는지 1~3줄 (어떻게는 코드가 말한다)
-
-Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>
 ```
+
+`Co-Authored-By: Claude ...` 같은 작업자 표기는 넣지 않는다 (CLAUDE.md Rule 4).
 
 type: `feat`(기능) `fix`(버그) `refactor` `test` `chore`(빌드·설정) `docs` `style`
 
