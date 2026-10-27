@@ -1,0 +1,62 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- Three items taken from the response to the documented sample request (apiKey=test). -->
+<response>
+    <header>
+        <resultCode>0</resultCode>
+        <resultMsg>SUCCESS</resultMsg>
+    </header>
+    <body>
+        <totalCount>3</totalCount>
+        <items>
+            <item>
+                <type>국도</type>
+                <eventType>공사</eventType>
+                <eventDetailType>도로포장</eventDetailType>
+                <startDate>20201013000000</startDate>
+                <coordX>127.148574</coordX>
+                <coordY>35.072289</coordY>
+                <linkId>3340030900</linkId>
+                <roadName>국도22호선</roadName>
+                <roadNo>22</roadNo>
+                <roadDrcType>화순방향</roadDrcType>
+                <lanesBlockType>전면통제</lanesBlockType>
+                <lanesBlocked/>
+                <message>동복터널 종점부 화순방향  전면통제&#xd;
+                    낙석산사태 정비공사</message>
+                <endDate>20201210000000</endDate>
+            </item>
+            <item>
+                <type>고속도로</type>
+                <eventType>교통사고</eventType>
+                <eventDetailType>충돌사고</eventDetailType>
+                <startDate>20201008000000</startDate>
+                <coordX>126.808098</coordX>
+                <coordY>35.041073</coordY>
+                <linkId>3270050900</linkId>
+                <roadName/>
+                <roadNo>1</roadNo>
+                <roadDrcType>목포방향</roadDrcType>
+                <lanesBlockType/>
+                <lanesBlocked>1 차로</lanesBlocked>
+                <message>전남 국도1호선 나주 산포교차로 부근 1차로 승용차 4중 사고 </message>
+                <endDate>20201008000000</endDate>
+            </item>
+            <item>
+                <type>고속도로</type>
+                <eventType>작업</eventType>
+                <eventDetailType>작업</eventDetailType>
+                <startDate>20201127075753</startDate>
+                <coordX>127.5166</coordX>
+                <coordY>34.9011</coordY>
+                <linkId>3260228100</linkId>
+                <roadName>남해선(영암-순천)</roadName>
+                <roadNo>101</roadNo>
+                <roadDrcType>하행</roadDrcType>
+                <lanesBlockType/>
+                <lanesBlocked>2차로 차단</lanesBlocked>
+                <message>(2차로)노면보수작업중</message>
+                <endDate/>
+            </item>
+        </items>
+    </body>
+</response>

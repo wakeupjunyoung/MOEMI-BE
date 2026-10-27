@@ -1,0 +1,14 @@
+# The image only needs the Gradle wrapper, the build scripts and src.
+.git
+.gradle
+build
+out
+bin
+.idea
+*.iml
+.vscode
+.claude
+.fe-cache
+Dockerfile
+.dockerignore
+*.md
