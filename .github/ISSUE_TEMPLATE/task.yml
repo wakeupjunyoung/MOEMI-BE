@@ -1,0 +1,17 @@
+name: 작업
+description: 설정, 리팩터링, 문서, 배포 등 기능·버그가 아닌 작업
+title: "[작업] "
+labels: ["chore"]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: 할 일
+      value: |
+        - [ ]
+    validations:
+      required: true
+  - type: textarea
+    id: why
+    attributes:
+      label: 이유 / 참고

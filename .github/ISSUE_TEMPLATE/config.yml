@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 협업 규칙 (브랜치·커밋·PR·이슈)
+    url: https://github.com/wakeupjunyoung/MOEMI-BE/blob/develop/.github/CONTRIBUTING.md
+    about: 이슈를 만들기 전에 규칙을 확인해 주세요.

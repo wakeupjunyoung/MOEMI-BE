@@ -1,0 +1,38 @@
+name: 버그 리포트
+description: 잘못 동작하는 것을 알립니다.
+title: "[버그] "
+labels: ["bug"]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: 무슨 문제인가요?
+      description: 기대한 동작과 실제 동작을 적어 주세요.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: 재현 방법
+      description: 호출한 API, 요청 값, 순서
+      placeholder: |
+        1. GET /api/transit/stops?keyword=광주역
+        2. ...
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: 응답 / 로그
+      description: 응답 본문이나 서버 로그. 키·비밀번호는 지우고 붙여 주세요.
+      render: text
+  - type: dropdown
+    id: env
+    attributes:
+      label: 발생 환경
+      options:
+        - 로컬
+        - 배포 서버 (Cloudtype)
+        - 테스트 (./gradlew test)
+    validations:
+      required: true
