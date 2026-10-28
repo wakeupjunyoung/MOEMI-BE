@@ -1,0 +1,18 @@
+# Template for personal local settings.
+# Copy this file to "application-local.properties" in the same folder and fill in your values.
+# application-local.properties is git-ignored; never commit real keys or passwords.
+# Anything left empty falls back to application.properties (environment variables or defaults).
+
+# --- Database (local MySQL/MariaDB) ---
+spring.datasource.url=jdbc:mysql://localhost:3306/moemi?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+spring.datasource.username=
+spring.datasource.password=
+
+# --- Server port: change it if 8080 is already in use on your PC ---
+#server.port=8081
+
+# --- data.go.kr / its.go.kr keys ---
+# TAGO bus APIs: the "일반 인증키"; the Encoding or the Decoding key both work.
+moemi.tago.service-key=
+#moemi.kma.service-key=
+#moemi.its.api-key=
