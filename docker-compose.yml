@@ -1,0 +1,52 @@
+# Runs the backend and its MariaDB on one server (GSM SV VM).
+#
+#   cp .env.example .env   # then fill in the keys and passwords
+#   docker compose up -d --build
+#
+# Update after `git pull`: docker compose up -d --build  (the database and its data are kept)
+services:
+  mariadb:
+    image: mariadb:11
+    restart: unless-stopped
+    environment:
+      MARIADB_DATABASE: moemi
+      MARIADB_USER: ${DB_USERNAME:-moemi}
+      MARIADB_PASSWORD: ${DB_PASSWORD:?Set DB_PASSWORD in .env}
+      MARIADB_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:?Set DB_ROOT_PASSWORD in .env}
+    volumes:
+      - moemi-db:/var/lib/mysql
+    networks:
+      - moemi-net
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+
+  backend:
+    build: .
+    restart: unless-stopped
+    # API keys and the DB account come from .env; the DB address is fixed to the service above.
+    env_file: .env
+    environment:
+      DB_URL: jdbc:mariadb://mariadb:3306/moemi
+      DB_USERNAME: ${DB_USERNAME:-moemi}
+    ports:
+      # GSM SV forwards the VM's port 80 to the instance's "HTTP" port.
+      - "${APP_PORT:-80}:8080"
+    depends_on:
+      mariadb:
+        condition: service_healthy
+    networks:
+      - moemi-net
+
+volumes:
+  moemi-db:
+
+networks:
+  moemi-net:
+    driver: bridge
+    driver_opts:
+      # GSM SV's GRE tunnel only carries 1400-byte packets; with Docker's default 1500,
+      # calls to external APIs (data.go.kr, ODsay, ...) hang without a response.
+      com.docker.network.driver.mtu: "1400"
