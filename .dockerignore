@@ -11,4 +11,7 @@ bin
 .fe-cache
 Dockerfile
 .dockerignore
+.env
+.env.*
+docker-compose.yml
 *.md
