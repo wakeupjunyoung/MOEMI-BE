@@ -66,17 +66,22 @@ git merge origin/develop
 
 ## 3. push + PR 생성
 
-본문은 `.github/PULL_REQUEST_TEMPLATE.md`를 복사해서 주석(`<!-- -->`) 자리를 실제 내용으로 채운다.
+본문은 `.github/PULL_REQUEST_TEMPLATE.md` 양식으로 **짧게** 쓴다.
+읽는 사람이 한눈에 "무슨 문제를 어떻게 풀었는지" 알 수 있으면 된다.
 
 - 제목: 대표 커밋 메시지와 같은 형식(`<type>: <한국어 요약>`). 커밋이 여러 개면 PR 전체를 아우르는 한 줄.
-- 템플릿의 섹션은 **지우지 않는다.** 해당 없는 칸에는 "없음"이라고 적는다.
+- 문제·해결: 각각 한두 문장, 쉬운 한국어로 쓴다.
+  - API 경로, 클래스·파일 이름, 설정 키, 상태 코드를 나열하지 않는다. 표도 쓰지 않는다.
+  - 기능 추가는 "어떤 기능을 추가했다" 정도로 쓴다. (예: "버스 즐겨찾기 기능을 추가했다.")
+  - 리뷰어가 꼭 알아야 할 점(예상되는 충돌 등)이 있으면 해결 끝에 한 줄만 덧붙인다.
 - 관련 이슈: `Closes #번호` (머지되면 이슈가 자동으로 닫힌다). 없으면 "없음".
-- 배포 시 필요: 새 환경변수, 새 테이블, 의존성, 외부 API 신청을 빠짐없이 적는다. 아래 명령으로 찾는다.
+- 배포 시 필요: 배포할 때 사람이 해야 할 일만 적는다 (새 환경변수 추가, 외부 API 신청 등). 없으면 "없음".
+  새 환경변수는 아래 명령으로 찾는다.
   ```bash
-  git diff origin/develop...HEAD -- build.gradle src/main/resources Dockerfile   # 의존성·환경변수·배포 설정
-  git diff origin/develop...HEAD -- src/main/java | grep -n "^+.*@Entity"         # 새 엔티티(테이블)
+  git diff origin/develop...HEAD -- src/main/resources | grep -n '^+.*\${'
   ```
-- 테스트·체크리스트: 실제로 한 것만 체크한다. 수동 확인을 하지 않았으면 체크하지 않는다.
+- 템플릿의 섹션은 **지우지 않는다.** 해당 없는 칸에는 "없음"이라고 적는다.
+- 체크리스트: 1·2단계에서 실제로 확인한 것만 체크한다.
 - PR 본문에 Claude 생성 표기("Generated with Claude Code" 등)를 넣지 않는다 (CLAUDE.md Rule 4).
 
 본문 예시:
@@ -85,28 +90,19 @@ git merge origin/develop
 ## 관련 이슈
 Closes #12
 
-## 요약
-버스 즐겨찾기 API를 추가했다.
+## 문제
+자주 타는 버스를 볼 때마다 정류장과 노선을 매번 다시 검색해야 했다.
 
-## 변경사항
-- 즐겨찾기 등록·조회·삭제 API 추가
-- `TransitFavorite` 엔티티와 Repository 추가
-
-## 테스트
-- [x] `./gradlew test` 통과
-- [ ] 수동 확인 (확인한 API와 결과): 없음
+## 해결
+버스 즐겨찾기 기능을 추가했다. 즐겨찾기한 버스의 도착 정보를 첫 화면에서 바로 볼 수 있다.
 
 ## 배포 시 필요
-- 새 테이블 `transit_favorite` (`ddl-auto=update`로 자동 생성)
-- 새 환경변수 `TAGO_SERVICE_KEY`
-
-## 확인 필요 / 리뷰 포인트
-- 없음
+- 환경변수 `TAGO_SERVICE_KEY` 추가 (공공데이터포털에서 TAGO 버스 API 활용신청 필요)
 
 ## 체크리스트
 - [x] base 브랜치가 `develop`이다
 - [x] 최신 `develop`을 반영했다
-- [x] 커밋 메시지가 `<type>: <한국어 요약>` 형식이다
+- [x] `./gradlew test` 통과
 - [x] 키·비밀번호가 커밋에 없다
 ```
 
