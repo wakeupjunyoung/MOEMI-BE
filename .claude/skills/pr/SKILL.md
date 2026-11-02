@@ -17,6 +17,7 @@ description: WSL의 gh CLI로 이 저장소(wakeupjunyoung/MOEMI-BE)에 develop 
 ## 1. 사전 점검
 
 ```bash
+./gradlew preflight                      # 브랜치·충돌·develop 최신 여부 점검 ([FAIL]이면 멈춘다)
 wsl.exe -e gh auth status                # 로그인/스코프 확인 (repo 스코프 필요)
 git status --short                       # 커밋 안 된 변경이 남아 있는지
 git branch --show-current

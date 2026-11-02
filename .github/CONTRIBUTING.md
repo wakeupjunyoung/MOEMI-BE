@@ -21,6 +21,15 @@ git fetch origin
 git switch -c feat/lifehelper-5 origin/develop
 ```
 
+작업을 시작하기 전에 `./gradlew preflight`로 브랜치 상태를 확인합니다.
+
+- 실패: `main`/`develop`에서 바로 작업 중, 브랜치가 아닌 커밋에 있음(detached HEAD), 해결 안 된 merge 충돌
+- 경고: 브랜치 이름이 규칙과 다름, 커밋 안 한 변경이 있음, `develop`보다 뒤처짐, 이미 머지된 브랜치
+
+```bash
+./gradlew preflight
+```
+
 ## 2. 커밋
 
 ### 형식

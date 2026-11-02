@@ -84,7 +84,11 @@ the `commit` and `pr` skills follow them.
 
 ## Commands
 
+Run `./gradlew preflight` before starting a change. If it reports `[FAIL]`, fix that first;
+tell the user about any `[WARN]`.
+
 ```bash
+./gradlew preflight      # git state check before work (branch, conflicts, behind develop)
 ./gradlew build          # compile + test
 ./gradlew compileJava    # compile only
 ./gradlew test           # tests only

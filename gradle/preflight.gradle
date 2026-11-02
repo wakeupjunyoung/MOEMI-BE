@@ -1,0 +1,64 @@
+// Pre-work check: run `./gradlew preflight` before starting a change.
+// Fails on a protected or detached branch and on unresolved merge conflicts.
+// Warns about branch naming, uncommitted changes, and a branch that is behind or already merged into develop.
+
+def protectedBranches = ['main', 'develop']
+def branchPattern = ~/^(feat|fix|refactor|test|docs|chore|style)\/[a-z0-9]+(-[a-z0-9]+)*$/
+def execProviders = providers
+
+tasks.register('preflight') {
+    group = 'verification'
+    description = 'Checks the git state before starting a change.'
+
+    doLast {
+        def git = { List<String> args ->
+            def run = execProviders.exec {
+                commandLine(['git'] + args)
+                ignoreExitValue = true
+            }
+            [exit: run.result.get().exitValue, out: run.standardOutput.asText.get().trim()]
+        }
+        def failures = 0
+        def fail = { String message -> failures++; println "[FAIL] ${message}" }
+        def warn = { String message -> println "[WARN] ${message}" }
+
+        def branch = git(['branch', '--show-current']).out
+        def onWorkBranch = !branch.isEmpty() && !(branch in protectedBranches)
+        if (branch.isEmpty()) {
+            fail '브랜치가 아니라 특정 커밋에 있어요(detached HEAD). 작업 브랜치로 전환하세요.'
+        } else if (branch in protectedBranches) {
+            fail "'${branch}'에서는 바로 작업하지 않아요. 작업 브랜치를 만드세요: git switch -c <type>/<짧은-설명> origin/develop"
+        } else if (!(branch ==~ branchPattern)) {
+            warn "브랜치 이름 '${branch}'이 규칙(<type>/<짧은-설명>, 예: feat/lifehelper-5)과 달라요."
+        }
+
+        def conflicted = git(['diff', '--name-only', '--diff-filter=U']).out
+        if (conflicted) {
+            fail "해결되지 않은 merge 충돌이 있어요: ${conflicted.readLines().join(', ')}"
+        }
+
+        def changes = git(['status', '--porcelain']).out
+        if (changes) {
+            warn "커밋하지 않은 변경이 ${changes.readLines().size()}개 있어요. 이어서 하는 작업인지 확인하세요."
+        }
+
+        if (onWorkBranch) {
+            if (git(['fetch', '--quiet', 'origin', 'develop']).exit != 0) {
+                warn 'origin/develop을 가져오지 못해서 최신 여부는 확인하지 못했어요.'
+            } else {
+                def ahead = git(['rev-list', '--count', 'origin/develop..HEAD']).out as int
+                def behind = git(['rev-list', '--count', 'HEAD..origin/develop']).out as int
+                if (ahead == 0 && behind > 0) {
+                    warn '이 브랜치의 커밋은 모두 develop에 들어가 있어요(이미 머지된 브랜치일 수 있어요). 새 작업이면 develop에서 새 브랜치를 만드세요.'
+                } else if (behind > 0) {
+                    warn "develop보다 커밋 ${behind}개가 뒤처져 있어요. git merge origin/develop으로 최신화하세요."
+                }
+            }
+        }
+
+        if (failures > 0) {
+            throw new GradleException("preflight 실패 ${failures}건: 위 [FAIL] 항목을 먼저 해결하세요.")
+        }
+        println "[OK] preflight 통과 (${branch})"
+    }
+}
