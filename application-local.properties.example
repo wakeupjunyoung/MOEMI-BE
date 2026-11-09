@@ -16,3 +16,6 @@ spring.datasource.password=
 moemi.tago.service-key=
 #moemi.kma.service-key=
 #moemi.its.api-key=
+
+# --- ODsay LAB "Server" key for bus travel time; register your PC's public IP at ODsay to call it locally ---
+#moemi.odsay.api-key=
