@@ -21,6 +21,15 @@ git fetch origin
 git switch -c feat/lifehelper-5 origin/develop
 ```
 
+작업을 시작하기 전에 `./gradlew preflight`로 브랜치 상태를 확인합니다.
+
+- 실패: `main`/`develop`에서 바로 작업 중, 브랜치가 아닌 커밋에 있음(detached HEAD), 해결 안 된 merge 충돌
+- 경고: 브랜치 이름이 규칙과 다름, 커밋 안 한 변경이 있음, `develop`보다 뒤처짐, 이미 머지된 브랜치
+
+```bash
+./gradlew preflight
+```
+
 ## 2. 커밋
 
 ### 형식
@@ -63,13 +72,15 @@ git config commit.template .github/.gitmessage
 
 - base는 **`develop`**, 제목은 대표 커밋과 같은 형식 (`feat: 대중교통 즐겨찾기(기능 4) API 구현`)
 - 본문은 PR 템플릿을 채웁니다. 해당 없는 칸은 지우지 말고 "없음"이라고 적습니다.
+- 본문은 짧게 씁니다. **무슨 문제가 있었고 어떻게 해결했는지**를 한두 문장씩 쉬운 한국어로 적고,
+  API 경로·클래스 이름·설정 값은 나열하지 않습니다. (예: "버스 즐겨찾기 기능을 추가했습니다.")
 - PR을 올리기 전에:
   - [ ] 최신 `develop`을 반영 (`git fetch origin && git merge origin/develop`)
   - [ ] `./gradlew test` 통과
   - [ ] 키·비밀번호가 커밋에 없음
 - 관련 이슈는 본문에 `Closes #이슈번호`로 연결합니다. 머지되면 이슈가 자동으로 닫힙니다.
 - 리뷰어 1명 이상 승인 후 머지합니다. 머지한 작업 브랜치는 삭제합니다.
-- 배포에 영향이 있는 변경(새 환경변수, 새 테이블, 의존성)은 본문 "배포 시 필요"에 반드시 적습니다.
+- 배포할 때 해야 할 일(새 환경변수 추가, 외부 API 신청 등)은 본문 "배포 시 필요"에 반드시 적습니다.
 
 ## 4. 이슈
 

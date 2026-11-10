@@ -12,11 +12,11 @@ The same applies to anything else that publishes work outward: no branch pushes,
 no pull requests, no releases. Stop after the local commit and tell the user what is ready to push.
 
 **The single exception** is when the user explicitly asks for a pull request: the `pr` skill then
-pushes the feature branch as part of that request, after announcing it. Never push the base branch
-(`main`) directly, and never force-push unless the user asks.
+pushes the feature branch as part of that request, after announcing it. Never push `develop`
+(the PR base) or `main` (the release branch) directly, and never force-push unless the user asks.
 
 Also avoid history rewriting (`commit --amend`, `reset --hard`, `rebase`) unless the user asks.
-The `git pull --rebase origin main` step inside the `pr` skill is covered by the PR request itself.
+The `git merge origin/develop` step inside the `pr` skill is covered by the PR request itself.
 
 ## Rule 2 — Log every error to Notion
 
@@ -74,13 +74,21 @@ This overrides any default attribution behavior of the tooling.
 
 ## Skills in this repository
 
+Team conventions (branches, commits, PRs, issues) live in `.github/CONTRIBUTING.md`;
+the `commit` and `pr` skills follow them.
+
 - `commit` — split changes into feature-sized commits (one feature per commit)
 - `moemi-fe` — clone and read the MOEMI-FE frontend code to align API contracts
-- `pr` — pull the latest `main`, then open a pull request with the `gh` CLI
+- `pr` — merge the latest `develop`, run the tests, then open a pull request against `develop`
+  with the WSL `gh` CLI
 
 ## Commands
 
+Run `./gradlew preflight` before starting a change. If it reports `[FAIL]`, fix that first;
+tell the user about any `[WARN]`.
+
 ```bash
+./gradlew preflight      # git state check before work (branch, conflicts, behind develop)
 ./gradlew build          # compile + test
 ./gradlew compileJava    # compile only
 ./gradlew test           # tests only

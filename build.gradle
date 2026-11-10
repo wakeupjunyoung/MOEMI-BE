@@ -40,3 +40,5 @@ dependencies {
 tasks.named('test') {
     useJUnitPlatform()
 }
+
+apply from: 'gradle/preflight.gradle'
